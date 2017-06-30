@@ -1,0 +1,15 @@
+{
+  "name": "eko-google-project",
+  "authors": [
+    "sindam <sowmithsindam64@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "google-map": "GoogleWebComponents/google-map#^1.2.0",
+    "iron-elements": "PolymerElements/iron-elements#^1.0.0",
+  "paper-elements": "PolymerElements/paper-elements#^1.0.1"
+  }
+}

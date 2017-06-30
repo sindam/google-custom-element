@@ -1,0 +1,25 @@
+body, html {
+  font-family: 'Roboto', Arial, sans-serif;
+  height:100%;
+  margin: 0;
+}
+paper-card{
+  position: relative;
+  bottom: 25px;
+  left: 25px;
+  top: 45px;
+  z-index: 1;
+}
+.search{
+  position:absolute;
+  background-color: green ;
+  font-size: 16px;
+  font-family: sans-serif;
+  color: red;
+}
+paper-icon-button{
+  position:relative;
+  right:80px;
+  top:10px;
+  left:180px;
+}

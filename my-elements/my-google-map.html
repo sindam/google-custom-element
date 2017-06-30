@@ -1,0 +1,133 @@
+
+ <script src="../bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+ <link rel="import" href="../bower_components/google-map/google-map.html">
+  <link rel="import" href="../bower_components/google-map/google-map-directions.html">
+  <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+ <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+ <link rel="import" href="../bower_components/paper-item/paper-item.html">
+ <link rel="import" href="../bower_components/paper-item/paper-icon-item.html">
+ <link rel="import" href="../bower_components/paper-input/paper-input.html">
+ <link rel="import" href="../bower_components/paper-card/paper-card.html">
+ <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/geo-location/geo-location.html">
+<link rel="import" href="../bower_components/google-map/google-map-search.html">
+<link rel="stylesheet" href="../styles.css">
+<dom-module id="my-google-map">
+<template>
+<style media="screen">
+
+ paper-tabs {
+   --paper-tabs-selection-bar-color: #0D47A1;
+   margin-top: 16px;
+ }
+ paper-tab {
+   --paper-tab-ink: #BBDEFB;
+ }
+ /* Other styles that make things more pleasant.
+    These could instead be added in styles.css since they
+    do not use any Polymer styling features. */
+ paper-tab iron-icon {
+   margin-right: 10px;
+ }
+ paper-tab.iron-selected {
+   background: rgb(66, 133, 244);
+   color: white;
+ }
+</style>
+<geo-location watch-pos high-accuracy latitude="{{lat_in}}" longitude="{{long_in}}"></geo-location>
+<google-map map="{{map}}" fit-to-markers latitude="{{lat}}" longitude="{{long}}"
+   api-key="AIzaSyAxIEKLcBQStosu5R322iYE9jFOhK79Ag4">
+
+  <paper-card elevation="2">
+    <paper-icon-item>
+     <!--Enter the place to be searched-->
+     <iron-icon icon="search" item-icon></iron-icon>
+     <paper-input label="Search"
+                  value="{{input}}"></paper-input>
+    <paper-icon-button src="../gps-fixed.png" aria-label="gps-fixed" on-click="_print"></paper-icon-button>
+    </paper-icon-item>
+    <paper-icon-item>
+     <!--Starting Address-->
+      <iron-icon icon="search" item-icon></iron-icon>
+      <paper-input label="Start address"
+                  value="{{start}}"></paper-input>
+    </paper-icon-item>
+   <paper-icon-item>  
+       <!--End Address-->
+   <iron-icon icon="search" item-icon></iron-icon>
+     <paper-input label="End address"
+                  value="{{end}}"></paper-input>
+   </paper-icon-item>
+ <paper-tabs selected="{{travelMode}}" attr-for-selected="label">
+ <!--modes of travel-->
+    <paper-tab label="DRIVING">
+      <iron-icon icon="maps:directions-car"></iron-icon>
+      <span>DRIVING</span>
+    </paper-tab>
+    <paper-tab label="WALKING">
+      <iron-icon icon="maps:directions-walk"></iron-icon>
+      <span>WALKING</span>
+    </paper-tab>
+    <paper-tab label="BICYCLING">
+      <iron-icon icon="maps:directions-bike"></iron-icon>
+      <span>BICYCLING</span>
+    </paper-tab>
+    <paper-tab label="TRANSIT">
+      <iron-icon icon="maps:directions-transit"></iron-icon>
+    <span>TRANSIT</span>
+ </paper-tab>
+</paper-tabs>
+</paper-card>
+
+ <google-map-marker latitude="{{lat}}" longitude="{{long}}"
+     title="You are here!" draggable="false"></google-map-marker>
+ </google-map>
+
+ <google-map-search map="[[map]]" query="{{input}}" results="{{results}}" radius="{{accuracy}}">
+ </google-map-search>
+  <template is="dom-repeat" items="{{results}}" as="marker">
+    <google-map-marker map="[[map]]" latitude="{{marker.latitude}}"longitude="{{marker.longitude}}">
+      <h2>{{marker.name}}</h2>
+      <span>{{marker.formatted_address}}</span>
+    </google-map-marker>
+   </template>
+   <google-map-directions map="[[map]]" api-key="AIzaSyAxIEKLcBQStosu5R322iYE9jFOhK79Ag4"
+     start-address="{{start}}"
+     end-address="{{end}}"
+     travel-mode="[[travelMode]]">
+   </google-map-directions>
+</template>
+<script>
+Polymer({
+  is:"my-google-map",
+  properties:
+  {
+    lat:{
+      type:Number,
+      value:0
+    },
+    long:{
+      type:Number,
+      value:0
+    },
+    lat_in:
+    {
+      type:Number,
+      value:"17.3850"
+    },
+    long_in:
+    {
+      type:Number,
+      value:"78.4867"
+    }
+  },
+  _print:function(){
+    console.log("button pressed");
+    console.log(this.lat_in,this.long_in);
+    this.lat=this.lat_in;
+    this.long=this.long_in;
+  }
+});
+</script>
+<dom-module>
